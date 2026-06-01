@@ -1,0 +1,7 @@
+ctrl	liver	10
+ctrl	liver	20
+ctrl	brain	5
+treat	liver	8
+treat	kidney	3
+treat	kidney	7
+ctrl	kidney	1
