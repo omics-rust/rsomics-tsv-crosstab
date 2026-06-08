@@ -1,0 +1,3 @@
+	brain	kidney	liver
+ctrl	1	1	2
+treat	N/A	2	1

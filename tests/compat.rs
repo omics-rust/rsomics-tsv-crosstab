@@ -218,3 +218,28 @@ fn missing_field_errors() {
     assert!(!b.status.success(), "datamash should reject short rows");
     assert!(a.stdout.is_empty());
 }
+
+// Goldens captured from `datamash 1.7` crosstab on data.tsv, so CI diffs even
+// where datamash is absent.
+#[test]
+fn matches_committed_golden() {
+    let data = include_bytes!("golden/data.tsv");
+    let count = pipe(ours().args(["--fields", "1,2"]), data);
+    assert!(count.status.success());
+    assert_eq!(
+        count.stdout,
+        include_bytes!("golden/crosstab_count.txt"),
+        "count crosstab drifted from committed datamash golden"
+    );
+
+    let sum = pipe(
+        ours().args(["--fields", "1,2", "--op", "sum", "--value", "3"]),
+        data,
+    );
+    assert!(sum.status.success());
+    assert_eq!(
+        sum.stdout,
+        include_bytes!("golden/crosstab_sum.txt"),
+        "sum crosstab drifted from committed datamash golden"
+    );
+}
